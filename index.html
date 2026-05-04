@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Right-to-Act Protocol Brief</title>
+  <meta name="description" content="Right-to-Act Protocol Brief: a structural security model for proving action legitimacy before execution." />
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #0d1b2d;
+      --panel-soft: #12243a;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --line: #2f4058;
+      --blue: #38bdf8;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --purple: #a78bfa;
+      --white: #ffffff;
+      --ink: #111827;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 34%),
+        radial-gradient(circle at top right, rgba(167, 139, 250, 0.16), transparent 35%),
+        linear-gradient(135deg, #020617 0%, #07111f 52%, #0f172a 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 46px;
+      background: rgba(13, 27, 45, 0.78);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.36);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      max-width: 920px;
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: 1.03;
+      letter-spacing: -0.055em;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .hero p {
+      max-width: 820px;
+      font-size: 20px;
+    }
+
+    strong { color: var(--text); }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: rgba(2, 6, 23, 0.5);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .section {
+      margin-top: 26px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 30px;
+      background: rgba(13, 27, 45, 0.72);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      background: rgba(18, 36, 58, 0.72);
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .label {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .label.blue { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
+    .label.green { background: rgba(34, 197, 94, 0.14); color: #86efac; }
+    .label.amber { background: rgba(245, 158, 11, 0.14); color: #fcd34d; }
+    .label.red { background: rgba(239, 68, 68, 0.14); color: #fca5a5; }
+    .label.purple { background: rgba(167, 139, 250, 0.14); color: #c4b5fd; }
+
+    .callout {
+      margin: 22px 0 0;
+      border-left: 4px solid var(--blue);
+      border-radius: 16px;
+      padding: 18px 20px;
+      background: rgba(56, 189, 248, 0.08);
+      color: #e0f2fe;
+      font-size: 19px;
+    }
+
+    .stack {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .stack-box {
+      min-height: 106px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(2, 6, 23, 0.46);
+    }
+
+    .stack-box small {
+      display: block;
+      color: var(--blue);
+      font-weight: 800;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stack-box b {
+      display: block;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    ul {
+      margin: 12px 0 0 18px;
+      padding: 0;
+      color: var(--muted);
+    }
+
+    li { margin-bottom: 8px; }
+
+    .mini {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .quote {
+      margin-top: 18px;
+      font-size: 22px;
+      line-height: 1.35;
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .footer {
+      margin-top: 28px;
+      padding: 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 920px) {
+      .hero { padding: 32px; }
+      .two-col, .risk-grid { grid-template-columns: 1fr; }
+      .stack { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: var(--white); color: var(--ink); }
+      .page { max-width: none; padding: 28px; }
+      .hero, .section, .card, .stack-box {
+        background: var(--white) !important;
+        color: var(--ink);
+        box-shadow: none;
+        border-color: #d1d5db;
+      }
+      p, li, .mini, .pill { color: #374151; }
+      strong, h1, h2, h3, .quote { color: var(--ink); }
+      .stack { grid-template-columns: repeat(5, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Protocol Brief · Right-to-Act · v1.0</div>
+      <h1>From Detecting Attacks to Proving Action Legitimacy</h1>
+      <p>
+        Most AI security tools try to detect malicious behavior. Right-to-Act changes the control point: before an AI-driven output becomes an action, the action must prove that it is allowed to exist.
+      </p>
+      <div class="meta">
+        <div class="pill">Structural Security Model</div>
+        <div class="pill">Closure Proof Before Execution</div>
+        <div class="pill">Decision Boundary Protocol</div>
+        <div class="pill">System Integrity Aware</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>The Problem</h2>
+      <p>
+        The current security model around AI is still mostly reactive. It detects, filters, logs, audits, or blocks after a signal appears suspicious.
+      </p>
+      <p>
+        But autonomous systems do not only produce information. They increasingly produce proposed actions: payments, account changes, workflow changes, access changes, routing decisions, infrastructure operations, and compliance-sensitive outcomes.
+      </p>
+      <div class="callout">
+        The core question is no longer only: “Is this output safe?”<br />
+        The deeper question is: “Does this proposed action have the right to become real?”
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>The Shift</h2>
+      <div class="two-col">
+        <div class="card">
+          <span class="label red">Existing Paradigm</span>
+          <h3>Trust behavior, then monitor</h3>
+          <p>
+            Existing systems often assume that if the model output looks safe enough, the action can proceed, while monitoring and audit happen around it.
+          </p>
+        </div>
+        <div class="card">
+          <span class="label green">Right-to-Act</span>
+          <h3>Prove legitimacy before execution</h3>
+          <p>
+            A proposed action does not proceed because the AI is confident. It proceeds only if a full Closure Proof can be produced against predefined structural conditions.
+          </p>
+        </div>
+      </div>
+      <p class="quote">
+        The protocol does not improve decisions. It defines when a decision is allowed to become an action.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Where It Sits</h2>
+      <p>
+        Right-to-Act is not a model, not a guardrail, and not a post-event audit layer. It is a decision boundary between proposed intent and execution.
+      </p>
+      <div class="stack">
+        <div class="stack-box"><small>01</small><b>User / System Intent</b></div>
+        <div class="stack-box"><small>02</small><b>AI Produces Proposed Action</b></div>
+        <div class="stack-box"><small>03</small><b>Right-to-Act Boundary</b></div>
+        <div class="stack-box"><small>04</small><b>Closure Proof / Snapshot</b></div>
+        <div class="stack-box"><small>05</small><b>Execution or Non-Action</b></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Security Impact Map</h2>
+      <p>
+        The protocol does not claim to erase every cyber risk. It changes which attacks can still translate into legitimate actions.
+      </p>
+
+      <div class="risk-grid">
+        <div class="card">
+          <span class="label green">1 · Structural Elimination</span>
+          <h3>Attacks that no longer produce action</h3>
+          <ul>
+            <li>Autonomous Agent Chain Exploitation / Uncontrolled Agent Chaining</li>
+            <li>Direct Prompt Injection / Jailbreaking</li>
+            <li>Indirect Prompt Injection</li>
+            <li>Data Exfiltration via LLM</li>
+            <li>Unauthorized Action Execution via AI Agents</li>
+            <li>Replay Attacks / Action Reuse</li>
+            <li>Backdoored or Poisoned Model Outputs</li>
+            <li>TOCTOU / Race Conditions around action execution</li>
+            <li>Privilege Escalation through the AI layer</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="label blue">2 · Structural Resistance</span>
+          <h3>Attacks that become much harder to exploit</h3>
+          <ul>
+            <li>Single-source Data Poisoning</li>
+            <li>Partial / isolated Oracle Manipulation</li>
+            <li>Real-time Data Manipulation</li>
+            <li>Social Engineering</li>
+            <li>Account Takeover (ATO)</li>
+            <li>DDoS against Re-authorization Paths</li>
+            <li>Reconnaissance / System Probing</li>
+            <li>Coordinated Multi-source Condition Shaping</li>
+            <li>Cross-layer Coherence Manipulation</li>
+          </ul>
+          <p class="mini">
+            These attacks do not disappear. They must now create structural coherence across multiple conditions, not merely manipulate a single signal.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="label amber">3 · Hardened Structural Risk</span>
+          <h3>Risks outside the direct action boundary</h3>
+          <ul>
+            <li>Implementation Bugs in the core or surrounding code</li>
+            <li>Governance / Meta-Protocol Manipulation</li>
+            <li>Hardware-level Spoofing without attestation</li>
+            <li>Infrastructure-level DoS</li>
+            <li>Misconfiguration of Action Lattice or Conditions</li>
+          </ul>
+          <p class="mini">
+            With System Integrity controls such as signatures, attestation, separation of authority, and immutable audit, these risks become high-cost, low-probability, and nearly impractical to exploit in normal operation.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="label purple">4 · Adaptive Calibration</span>
+          <h3>Learning from outcomes without self-modification</h3>
+          <ul>
+            <li>Continuous condition refinement based on outcomes</li>
+            <li>Reduction of recurring misclassification patterns</li>
+            <li>Improvement of threshold calibration and lattice boundaries</li>
+            <li>Detection of structural inconsistencies over time</li>
+            <li>Increased resistance to multi-source manipulation patterns</li>
+          </ul>
+          <p class="mini">
+            The system improves over time by refining conditions and boundaries through governed calibration, not by letting the AI rewrite the protocol at runtime.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Why This Matters</h2>
+      <p>
+        Most attacks against AI systems are dangerous because model outputs can be converted into real-world effects. Right-to-Act breaks that assumption.
+      </p>
+      <p>
+        Even if the AI is misled, manipulated, overconfident, or operating in a distorted context, the proposed action must still satisfy the Legitimacy Envelope and generate a Closure Proof before execution.
+      </p>
+      <div class="callout">
+        A manipulated model output is no longer enough. The attacker must make the entire action space structurally coherent.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>System Integrity Layer</h2>
+      <p>
+        Right-to-Act proves the legitimacy of an action. A production-grade deployment must also prove the integrity of the system that evaluates it.
+      </p>
+      <div class="two-col">
+        <div class="card">
+          <h3>Proof of Action</h3>
+          <p>
+            Closure Proof, Snapshot, Legitimacy Envelope, Action Lattice, and conditional continuity.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Proof of System</h3>
+          <p>
+            Signed code and policies, remote attestation, immutable audit, separation of authority, versioning, and controlled governance.
+          </p>
+        </div>
+      </div>
+      <p class="quote">
+        Learning reduces error. Control prevents corruption.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Bottom Line</h2>
+      <p>
+        Right-to-Act is a structural security model for AI-driven action. It does not try to guess the attacker’s intent. It does not rely on model confidence. It does not wait for a post-event audit.
+      </p>
+      <p>
+        It requires every action to prove its legitimacy before it can become real.
+      </p>
+      <div class="callout">
+        From “detect the attack” to “prevent illegitimate action from existing.”
+      </div>
+    </section>
+
+    <div class="footer">
+      Right-to-Act Protocol Brief · Structural Security Model · v1.0
+    </div>
+  </main>
+</body>
+</html>
