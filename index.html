@@ -260,12 +260,31 @@
       <p>
         Most AI security tools try to detect malicious behavior. Right-to-Act changes the control point: before an AI-driven output becomes an action, the action must prove that it is allowed to exist.
       </p>
+      <p class="quote">
+        A manipulated model output is no longer enough. The attacker must make the entire action space structurally coherent.
+      </p>
       <div class="meta">
         <div class="pill">Structural Security Model</div>
         <div class="pill">Closure Proof Before Execution</div>
         <div class="pill">Decision Boundary Protocol</div>
         <div class="pill">System Integrity Aware</div>
       </div>
+    </section>
+
+    <section class="section">
+      <h2>Key Terms</h2>
+      <p>
+        <strong>Closure Proof</strong> means a complete set of conditions required for an action to be allowed.
+      </p>
+      <p>
+        <strong>Legitimacy Envelope</strong> means the full context required to evaluate whether a proposed action is structurally admissible.
+      </p>
+      <p>
+        <strong>Action Lattice</strong> means the predefined structure of allowed actions, fallbacks, suspensions, and transitions.
+      </p>
+      <p>
+        <strong>Snapshot</strong> means the auditable proof of the action’s legitimacy state at the moment of evaluation.
+      </p>
     </section>
 
     <section class="section">
@@ -316,6 +335,23 @@
         <div class="stack-box"><small>03</small><b>Right-to-Act Boundary</b></div>
         <div class="stack-box"><small>04</small><b>Closure Proof / Snapshot</b></div>
         <div class="stack-box"><small>05</small><b>Execution or Non-Action</b></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>How It Works in Practice</h2>
+      <p>
+        Example: an AI agent attempts to send a payment.
+      </p>
+      <div class="stack">
+        <div class="stack-box"><small>01</small><b>Proposed Action: Send Payment</b></div>
+        <div class="stack-box"><small>02</small><b>Required Conditions: Authorization, Balance, Scope, Compliance</b></div>
+        <div class="stack-box"><small>03</small><b>Missing Condition: Authorization Context</b></div>
+        <div class="stack-box"><small>04</small><b>No Closure Proof</b></div>
+        <div class="stack-box"><small>05</small><b>Action Does Not Execute</b></div>
+      </div>
+      <div class="callout">
+        The AI may propose the action. The protocol decides whether the action can become real.
       </div>
     </section>
 
@@ -402,7 +438,7 @@
         Even if the AI is misled, manipulated, overconfident, or operating in a distorted context, the proposed action must still satisfy the Legitimacy Envelope and generate a Closure Proof before execution.
       </p>
       <div class="callout">
-        A manipulated model output is no longer enough. The attacker must make the entire action space structurally coherent.
+        Manipulating the model is no longer sufficient. The action still has to satisfy the full structural conditions.
       </div>
     </section>
 
